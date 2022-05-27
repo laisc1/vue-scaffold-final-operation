@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laisc.finalwork_server.mapper.ArticleMapper">
+
+
+    <resultMap id="myFindArticle" type="com.laisc.finalwork_server.entity.Article" >
+        <id property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="article" column="article" />
+    </resultMap>
+    <select id="findAllArticle" resultMap="myFindArticle" >
+        select
+            t_article.id               id,
+            t_article.title            title,
+            t_article.article          article
+
+        from t_article
+
+    </select>
+
+
+    <resultMap id="myFindArticleById" type="com.laisc.finalwork_server.entity.Article" >
+        <id property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="article" column="article" />
+    </resultMap>
+    <select id="findArticleById" resultMap="myFindArticleById" parameterType="int" >
+        select
+            t_article.id               id,
+            t_article.title            title,
+            t_article.article          article
+
+        from t_article
+        where id = #{myid}
+    </select>
+
+
+    <insert id="insertArticle" parameterType="com.laisc.finalwork_server.entity.Article">
+        insert into t_article (title, article)
+        VALUES (#{title}, #{article})
+    </insert>
+
+    <update id="updateArticle"
+            parameterType="com.laisc.finalwork_server.entity.Article">
+        update t_article
+        set
+            title=             #{title},
+            article =        #{article}
+        where id = #{id}
+    </update>
+
+    <delete id="delArticle" parameterType="int">
+        delete
+        from t_article
+        where id = #{id}
+    </delete>
+
+
+</mapper>

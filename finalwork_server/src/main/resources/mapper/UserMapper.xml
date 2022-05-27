@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laisc.finalwork_server.mapper.UserMapper">
+
+    <resultMap id="finduser" type="com.laisc.finalwork_server.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="role" column="role"/>
+        <result property="signature" column="signature"/>
+    </resultMap>
+    <select id="findAllUser" resultMap="finduser">
+        select t_user.id        id,
+               t_user.username  username,
+               t_user.password  password,
+               t_user.role      role,
+               t_user.signature signature
+        from t_user
+
+    </select>
+
+
+    <resultMap id="mycheckuser" type="com.laisc.finalwork_server.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="role" column="role"/>
+        <result property="signature" column="signature"/>
+    </resultMap>
+    <select id="checkUser" resultMap="mycheckuser" parameterType="com.laisc.finalwork_server.entity.User">
+        select t_user.id        id,
+               t_user.username  username,
+               t_user.password  password,
+               t_user.role      role,
+               t_user.signature signature
+        from t_user
+        where username = #{username}
+          and password = #{password}
+    </select>
+
+
+    <resultMap id="mycheckuserOne" type="com.laisc.finalwork_server.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="role" column="role"/>
+        <result property="signature" column="signature"/>
+    </resultMap>
+    <select id="checkUserOne" resultMap="mycheckuserOne" parameterType="com.laisc.finalwork_server.entity.User">
+        select t_user.id        id,
+               t_user.username  username,
+               t_user.password  password,
+               t_user.role      role,
+               t_user.signature signature
+        from t_user
+        where username = #{username}
+          and password = #{password}
+    </select>
+
+
+    <resultMap id="myfinduserbyid" type="com.laisc.finalwork_server.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="role" column="role"/>
+        <result property="signature" column="signature"/>
+    </resultMap>
+    <select id="findUserById" resultMap="myfinduserbyid" parameterType="int">
+        select t_user.id        id,
+               t_user.username  username,
+               t_user.password  password,
+               t_user.role      role,
+               t_user.signature signature
+        from t_user
+        where id = #{myid}
+    </select>
+
+
+    <insert id="insertUser" parameterType="com.laisc.finalwork_server.entity.User">
+        insert into t_user (username, password, role, signature)
+        VALUES (#{username}, #{password}, #{role}, #{signature})
+    </insert>
+
+
+    <resultMap id="findusernopw" type="com.laisc.finalwork_server.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="role" column="role"/>
+        <result property="signature" column="signature"/>
+    </resultMap>
+    <select id="findUserWithNoPassword" resultMap="findusernopw" parameterType="int">
+        select t_user.id        id,
+               t_user.username  username,
+               t_user.role      role,
+               t_user.signature signature
+        from t_user
+        where id = #{myid}
+    </select>
+
+
+    <resultMap id="findallusernopw" type="com.laisc.finalwork_server.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="role" column="role"/>
+        <result property="signature" column="signature"/>
+    </resultMap>
+    <select id="findAllUserWithNoPassword" resultMap="findallusernopw">
+        select t_user.id        id,
+               t_user.username  username,
+               t_user.role      role,
+               t_user.signature signature
+        from t_user
+    </select>
+
+
+    <update id="updateUser"
+            parameterType="com.laisc.finalwork_server.entity.User">
+        update t_user
+        <set>
+
+            <if test="username != null and username != '' ">username=#{username},</if>
+            <if test="password != null and password != '' ">password=#{password},</if>
+            role= #{role},
+            signature = #{signature}
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <update id="changeUserPassword"
+            parameterType="com.laisc.finalwork_server.entity.ChangePw">
+        update t_user
+        set password=#{newPw}
+
+        where id = #{id}
+          and password = #{oldPw}
+    </update>
+
+
+    <delete id="delUser" parameterType="int">
+        delete
+        from t_user
+        where id = #{id}
+    </delete>
+</mapper>
